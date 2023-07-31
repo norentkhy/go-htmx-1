@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .htmx-request .idle {
+      display: none;
+    }
+
+    .loading {
+      display: none;
+    }
+
+    .htmx-request .loading {
+      display: inline;
+    }
+
+    .htmx-request.loading {
+      display: inline;
+    }
+  </style>
+  <script src="https://unpkg.com/htmx.org@1.9.4"
+    integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx.org/dist/ext/disable-element.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  hihi
+
+  <h1>list</h1>
+  <ul id="film-list">
+    {{ range .Films }}
+    <li>{{ .Title }} - {{ .Director }}</li>
+    {{ end }}
+  </ul>
+
+  <h2>add</h2>
+  <form hx-post="/add-film/" hx-target="#film-list" hx-swap="beforeend" hx-ext="disable-element"
+    hx-disable-element="#submit-button">
+    <div>
+      <label for="film-title">Title</label>
+      <input type="text" name="title" id="film-title" />
+    </div>
+    <div>
+      <label for="film-director">Director</label>
+      <input type="text" name="director" id="film-director" />
+    </div>
+
+    <button id="submit-button" type="submit" hx-indicator="#is-submitting">
+      <span class="idle">Submit</span>
+      <span id="is-submitting" class="loading">Submitting...</span>
+    </button>
+  </form>
+</body>
+
+</html>
